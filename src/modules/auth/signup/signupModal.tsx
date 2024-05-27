@@ -2,18 +2,18 @@ import React, { useState } from 'react';
 import { Modal } from 'antd';
 import { useFormik } from "formik";
 import { Button, Grid, TextField } from '@mui/material';
-import { useLoginForm } from './hook/useLoginForm';
-import { JobRole } from './schema/loginSchema';
+import { useSignUpForm } from './hook/useSignUpForm';
+import { JobRole } from './schema/signupSchema';
 
-const LoginModal: React.FC = () => {
+const SignUpModal: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedRole, setSelectedRole] = useState<JobRole>(JobRole.JobSeeker); // Default selection
-    const { handleSubmit, initialValues, validationSchema } = useLoginForm();
+    const { handleSubmit, initialValues, validationSchema } = useSignUpForm();
     const formik = useFormik({
         initialValues: { ...initialValues, role: selectedRole },
         validationSchema,
         onSubmit: (values) => {
-            console.log("values========", values);
+            console.log("SignUp values========", values);
             handleSubmit(values);
         }
     });
@@ -33,15 +33,15 @@ const LoginModal: React.FC = () => {
 
     return (
         <>
-            <Button onClick={showModal} style={{ borderRadius: '9999px', backgroundColor: 'green', color: 'white', width: "30%" }}>Login</Button>
+            <Button onClick={showModal} style={{ borderRadius: '9999px', backgroundColor: 'blue', color: 'white', width: "30%" }}>Sign Up</Button>
             <Modal open={isModalOpen} maskClosable={true} onCancel={handleCancel} footer={null}>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '20px' }}>
                     <div style={{ width: '100%', backgroundColor: '#f0f0f0', padding: '20px', borderRadius: '10px', display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
                         <Button
                             onClick={() => handleRoleSelect(JobRole.JobSeeker)}
                             style={{
-                                backgroundColor: selectedRole === JobRole.JobSeeker ? 'green' : 'white',
-                                color: selectedRole === JobRole.JobSeeker ? 'white' : 'green',
+                                backgroundColor: selectedRole === JobRole.JobSeeker ? 'blue' : 'white',
+                                color: selectedRole === JobRole.JobSeeker ? 'white' : 'blue',
                                 borderRadius: '9999px',
                                 marginRight: '10px',
                                 flex: 1,
@@ -53,8 +53,8 @@ const LoginModal: React.FC = () => {
                         <Button
                             onClick={() => handleRoleSelect(JobRole.JobProvider)}
                             style={{
-                                backgroundColor: selectedRole === JobRole.JobProvider ? 'green' : 'white',
-                                color: selectedRole === JobRole.JobProvider ? 'white' : 'green',
+                                backgroundColor: selectedRole === JobRole.JobProvider ? 'blue' : 'white',
+                                color: selectedRole === JobRole.JobProvider ? 'white' : 'blue',
                                 borderRadius: '9999px',
                                 flex: 1,
                                 height: '50px'
@@ -65,6 +65,43 @@ const LoginModal: React.FC = () => {
                     </div>
                     <form onSubmit={formik.handleSubmit} style={{ width: '100%' }}>
                         <Grid container spacing={4}>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    id="firstname"
+                                    name="firstname"
+                                    type="text"
+                                    label="First Name"
+                                    fullWidth
+                                    autoComplete="given-name"
+                                    autoFocus
+                                    value={formik.values.firstname}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    placeholder="First Name"
+                                    variant="outlined"
+                                />
+                                {formik.errors.firstname && formik.touched.firstname && (
+                                    <p className="text-red-700">{formik.errors.firstname}</p>
+                                )}
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    id="lastname"
+                                    name="lastname"
+                                    type="text"
+                                    label="Last Name"
+                                    fullWidth
+                                    autoComplete="family-name"
+                                    value={formik.values.lastname}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    placeholder="Last Name"
+                                    variant="outlined"
+                                />
+                                {formik.errors.lastname && formik.touched.lastname && (
+                                    <p className="text-red-700">{formik.errors.lastname}</p>
+                                )}
+                            </Grid>
                             <Grid item xs={12}>
                                 <TextField
                                     id="email"
@@ -73,7 +110,6 @@ const LoginModal: React.FC = () => {
                                     label="Email address"
                                     fullWidth
                                     autoComplete="email"
-                                    autoFocus
                                     value={formik.values.email}
                                     onChange={formik.handleChange}
                                     onBlur={formik.handleBlur}
@@ -102,8 +138,25 @@ const LoginModal: React.FC = () => {
                                 )}
                             </Grid>
                             <Grid item xs={12}>
+                                <TextField
+                                    id="confirmPassword"
+                                    name="confirmPassword"
+                                    type="password"
+                                    label="Confirm Password"
+                                    value={formik.values.confirmPassword}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    fullWidth
+                                    placeholder="Confirm your password"
+                                    variant="outlined"
+                                />
+                                {formik.errors.confirmPassword && formik.touched.confirmPassword && (
+                                    <p className="text-red-700">{formik.errors.confirmPassword}</p>
+                                )}
+                            </Grid>
+                            <Grid item xs={12}>
                                 <Button type="submit" variant="contained">
-                                    Login
+                                    Sign Up
                                 </Button>
                             </Grid>
                         </Grid>
@@ -114,4 +167,4 @@ const LoginModal: React.FC = () => {
     );
 };
 
-export default LoginModal;
+export default SignUpModal;
