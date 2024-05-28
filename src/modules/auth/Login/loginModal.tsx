@@ -14,7 +14,7 @@ const LoginModal: React.FC = () => {
         validationSchema,
         onSubmit: (values) => {
             console.log("values========", values);
-            handleSubmit(values);
+            handleSubmit(values, setIsModalOpen);
         }
     });
 
@@ -80,9 +80,6 @@ const LoginModal: React.FC = () => {
                                     placeholder="Your e-mail address"
                                     variant="outlined"
                                 />
-                                {formik.errors.email && formik.touched.email && (
-                                    <p className="text-red-700">{formik.errors.email}</p>
-                                )}
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
@@ -97,12 +94,10 @@ const LoginModal: React.FC = () => {
                                     placeholder="Your password"
                                     variant="outlined"
                                 />
-                                {formik.errors.password && formik.touched.password && (
-                                    <p className="text-red-700">{formik.errors.password}</p>
-                                )}
+                          
                             </Grid>
                             <Grid item xs={12}>
-                                <Button type="submit" variant="contained">
+                                <Button type="submit" variant="contained" disabled={!(formik.isValid && formik.dirty)}>
                                     Login
                                 </Button>
                             </Grid>

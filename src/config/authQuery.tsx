@@ -2,13 +2,12 @@ import { gql } from "@apollo/client";
 import { apolloClient } from "./client";
 
 const signUpMutation = gql`
-  mutation SignUp($data: UserSignupInput!) {
-    signUp(data: $data) {
+  mutation SignUp($userSignupInput: UserSignupInput!) {
+    signUp(userSignupInput : $userSignupInput) {
       firstname
       lastname
       email
       role
-      password
     }
   }
 `;
@@ -26,14 +25,16 @@ const loginMutation = gql`
   }
 `;
 
-export const signUpData = async (data: any) => {
+export const signUpData = async (userSignupInput : any) => {
+  console.log("userSignupInput-----", userSignupInput);
   const response = await apolloClient.mutate({
     mutation: signUpMutation,
     variables: {
-      data,
+        userSignupInput,
     },
   });
   console.log("response from signup-----", response);
+  return response.data.signUp;
 };
 
 export const loginData = async (loginUserInput: any) => {
@@ -45,5 +46,5 @@ export const loginData = async (loginUserInput: any) => {
         loginUserInput
     },
   });
-  return response.data.login;
+  return response;
 };

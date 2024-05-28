@@ -3,6 +3,7 @@ import useLoginModal from '@/hooks/useLogin';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import LoginModal from "@/modules/auth/Login/loginModal"
+import SignUpModal from '@/modules/auth/signup/signupModal';
 
 const UserNavbar: React.FC = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -41,6 +42,7 @@ const UserNavbar: React.FC = () => {
                         </div>
                         <Link href="contact.html" className="nav-item text-gray-700 hover:text-primary py-2 px-4">Contact</Link>
                         <LoginModal />
+                        <SignUpModal />
                     </div>
                 </div>
             </div>
