@@ -1,3 +1,4 @@
+import { setToken } from "@/utils/AuthToken";
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: {
@@ -12,6 +13,7 @@ export const authSlice = createSlice({
   reducers: {
     setCurrentUser: (state, action) => {
       state.currentUser = action.payload;
+      console.log("token in reduxer-------", state?.currentUser?.token);
     },
     removeCurrentUser: (state) => {
       state.currentUser = null;

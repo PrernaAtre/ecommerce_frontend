@@ -1,8 +1,11 @@
-import AuthToken from "@/utils/AuthToken";
+import { getToken } from "@/utils/AuthToken";
 import { NextRequest, NextResponse } from "next/server";
 
-export function middleware(request: NextRequest) {
-    const token = AuthToken.get();
+export async function middleware(request: NextRequest) {
+    // const token = request.cookies.get('token')?.value
+    const token = await getToken();
+    console.log("token in middleware----", token);
+    
     const isLoggedIn = token !== null;
     const { pathname } = request.nextUrl;
     const publicPaths = ['/landingPage', '/about'];

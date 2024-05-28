@@ -4,8 +4,8 @@ import { JobRole, loginSchema } from '../schema/loginSchema';
 import toast from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { setCurrentUser } from '@/store/reducers/authSlice';
-import AuthToken from '@/utils/AuthToken';
 import { useRouter } from 'next/navigation';
+import { setToken } from '@/utils/AuthToken';
 
 export const useLoginForm = () => {
     const router = useRouter();
@@ -23,14 +23,18 @@ export const useLoginForm = () => {
             const response = await loginData(sanitizeInput)
             console.log("response login in hook------", response);
             if (response) {
+                console.log("response in if ----", response);
+                
                 toast.success('Login Successfully');
                 dispatch(setCurrentUser(response?.data?.login));
-                AuthToken.set(response?.data?.login?.token);
+                setToken(response?.data?.login?.token);
                 setModalOpen(false);
                 router.push("/landingPage");
             }
         }
         catch (error) {
+            console.log("error in catch---", error);
+            
             toast.error('Invalid Login');
         }
     }
