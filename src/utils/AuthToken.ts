@@ -8,10 +8,10 @@ export const setToken = async(token : string) =>{
 	cookies().set('token',token)
 }
 
-export const getToken = async() => {
+export const getToken = async () => {
   const cookieStore = cookies()
   const token = cookieStore.get('token')
-  console.log("token-------",token);
+  console.log("token-------",token?.value);
   return token?.value;
 }
 
